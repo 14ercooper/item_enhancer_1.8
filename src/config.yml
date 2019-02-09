@@ -1,0 +1,73 @@
+# Data for the enchancement stone (nether quartz)
+enhance:
+  name: "&e&lEnhance Stone"
+  unbreaking: 10
+  lore:
+    - "&aUse to enhance item"
+
+# Data for the magic scroll (paper)
+maigc:
+  name: "&b&lMagic Scroll"
+  unbreaking: 10
+  lore:
+    - "&aPrevent item downgrade"
+
+# Data for the lucky scroll (paper)
+lucky:
+  name: "&e&lLucky Scroll"
+  unbreaking: 10
+  lore:
+    - "&aIncrease success chance"
+
+# How much should your odds of success improve when using a lucky scroll?
+LuckyIncrease: 0.01
+
+# Chance of an enhancement failing (1 = 100%, 0.5 = 50%, etc). Set to 2 to disable enhancement for the level.
+chance:
+  default: 2 # Chance if not specified below
+  l1: 0
+  l1: 0
+  l1: 0.3
+  l1: 0.4
+  l1: 1
+  l1: 1
+  l1: 1
+  l1: 0.85
+  l1: 0.9
+  l1: 0.92
+  l1: 0.95
+  l1: 0.96
+  l1: 0.97
+  l1: 0.98
+  l1: 0.99
+
+# How many levels should the enhancement be decreased upon failure? (0 will not decrease, 1 for 1 level, 2 for 2 levels, etc)
+downgrade:
+  default: 1
+  l1: 1
+  l2: 1
+  l3: 1
+  l4: 1
+  l5: 1
+
+# Should the enhancement be broadcast for the level?
+broadcast:
+  default: false
+  l1: true
+  l2: true
+  l3: true
+  l4: true
+  l5: true
+
+# Translation data
+lang:
+  # World broadcast
+  broadcastMessage: "&4[Server] <player> <status> <item> to <level>"
+  notAllowed: "&cEnhancement level not allowed!"
+  statusSuccess: "&asuccessfully enhanced"
+  statusFail: "&cfailed to enhance"
+  # Player broadcase
+  enhanceSuccess: "&aEnhancement success!"
+  enchantFailed: "&cEnhancement failed :("
+  armorBonus: "Armor Bonus: +"
+  damageBonus: "Damage Bonus: +"

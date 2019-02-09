@@ -1,0 +1,5 @@
+name: ItemEnhancer
+main: com.fourteener.itemenhance.Main
+version: 0.1
+api-version: 1.8.8
+commands:
