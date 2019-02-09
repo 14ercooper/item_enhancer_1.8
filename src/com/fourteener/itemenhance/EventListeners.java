@@ -8,6 +8,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -127,5 +128,19 @@ public class EventListeners implements Listener {
 		else {
 			return;
 		}
+	}
+	
+	@EventHandler
+	public void playerInteract (PlayerInteractEvent event) {
+		// Gets the item clicked with
+		ItemStack item = event.getItem();
+		// If the item clicked isn't an enhance stone, just pass everything back to Spigot
+		if (!item.equals(ConfigParser.getItemStack("enhance"))) {
+			return;
+		}
+		// Otherwise, we can begin enhancing the item!
+		GUIInventory gui = new GUIInventory ();
+		gui.openInventory(event.getPlayer());
+		event.setCancelled(true); // No need to process the event if we're enhancing
 	}
 }

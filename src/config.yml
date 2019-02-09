@@ -26,24 +26,24 @@ LuckyIncrease: 0.01
 chance:
   default: 2 # Chance if not specified below
   l1: 0
-  l1: 0
-  l1: 0.3
-  l1: 0.4
-  l1: 1
-  l1: 1
-  l1: 1
-  l1: 0.85
-  l1: 0.9
-  l1: 0.92
-  l1: 0.95
-  l1: 0.96
-  l1: 0.97
-  l1: 0.98
-  l1: 0.99
+  l2: 0
+  l3: 0.3
+  l4: 0.4
+  l5: 1
+  l6: 1
+  l7: 1
+  l8: 0.85
+  l9: 0.9
+  l10: 0.92
+  l11: 0.95
+  l12: 0.96
+  l13: 0.97
+  l14: 0.98
+  l15: 0.99
 
 # How many levels should the enhancement be decreased upon failure? (0 will not decrease, 1 for 1 level, 2 for 2 levels, etc)
 downgrade:
-  default: 1
+  default: 0
   l1: 1
   l2: 1
   l3: 1
@@ -66,8 +66,17 @@ lang:
   notAllowed: "&cEnhancement level not allowed!"
   statusSuccess: "&asuccessfully enhanced"
   statusFail: "&cfailed to enhance"
-  # Player broadcase
+  # Player broadcast
   enhanceSuccess: "&aEnhancement success!"
   enchantFailed: "&cEnhancement failed :("
+  # GUI Stuff
+  guiTitle: "Enhance Item"
+  guiMagic: "Magic Scroll"
+  guiLucky: "Lucky Scroll"
+  guiItem: "Item To Enhance"
+  guiConfirm: "Enhance"
+  # Do not include any numbers (0123456789) in the texts below this line
   armorBonus: "Armor Bonus: +"
+  armorBonusPost: " Armor"
   damageBonus: "Damage Bonus: +"
+  damageBonusPost: " Damage"

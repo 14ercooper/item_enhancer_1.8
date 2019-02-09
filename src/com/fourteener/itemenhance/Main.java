@@ -11,6 +11,7 @@ public class Main extends JavaPlugin {
 		saveDefaultConfig();
 		pluginConfig = getConfig();
 		getServer().getPluginManager().registerEvents(new EventListeners(), this);
+		getServer().getPluginManager().registerEvents(new GUIInventory(), this);
 	}
 	
 	@Override
