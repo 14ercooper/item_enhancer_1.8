@@ -9,9 +9,12 @@ public class CommandProcessor implements CommandExecutor {
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+		// Did the command get called by a player?
 		if (sender instanceof Player && label.equalsIgnoreCase("ieadmin")) {
 			Player player = (Player) sender;
+			// Is the player an admin or otherwise granted permission?
 			if (player.isOp() || player.hasPermission("itemenhance.admin")) {
+				// If so, give them the requested item
 				if (args[1].equalsIgnoreCase("enhance")) {
 					player.getInventory().addItem(ConfigParser.getItemStack("enhance"));
 					return true;
