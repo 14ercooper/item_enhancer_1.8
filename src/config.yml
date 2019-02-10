@@ -1,23 +1,23 @@
 # Data for the enchancement stone (nether quartz)
 enhance:
-  name: "&e&lEnhance Stone"
+  name: "§e§lEnhance Stone"
   unbreaking: 10
   lore:
-    - "&aUse to enhance item"
+    - "§aUse to enhance item"
 
 # Data for the magic scroll (paper)
 maigc:
-  name: "&b&lMagic Scroll"
+  name: "§b§lMagic Scroll"
   unbreaking: 10
   lore:
-    - "&aPrevent item downgrade"
+    - "§aPrevent item downgrade"
 
 # Data for the lucky scroll (paper)
 lucky:
-  name: "&e&lLucky Scroll"
+  name: "§e§lLucky Scroll"
   unbreaking: 10
   lore:
-    - "&aIncrease success chance"
+    - "§aIncrease success chance"
 
 # How much should your odds of success improve when using a lucky scroll?
 LuckyIncrease: 0.01
@@ -62,13 +62,14 @@ broadcast:
 # Translation data
 lang:
   # World broadcast
-  broadcastMessage: "&4[Server] <player> <status> <item> to <level>"
-  notAllowed: "&cEnhancement level not allowed!"
-  statusSuccess: "&asuccessfully enhanced"
-  statusFail: "&cfailed to enhance"
+  broadcastMessage: "§4[Server] <player> <status> <item> to <level>"
+  notAllowed: "§cEnhancement level not allowed!"
+  badItem: "That item cannot be enhanced."
+  statusSuccess: "§asuccessfully enhanced"
+  statusFail: "§cfailed to enhance"
   # Player broadcast
-  enhanceSuccess: "&aEnhancement success!"
-  enchantFailed: "&cEnhancement failed :("
+  enhanceSuccess: "§aEnhancement success!"
+  enchantFailed: "§cEnhancement failed :("
   # GUI Stuff
   guiTitle: "Enhance Item"
   guiMagic: "Magic Scroll"

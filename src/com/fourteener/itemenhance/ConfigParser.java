@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.HumanEntity;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -81,5 +82,19 @@ public class ConfigParser {
 			e.printStackTrace();
 		}
 		return langData;
+	}
+	
+	// Constructs the status broadcast that is sent to the entire world
+	// <player> <status> <item> to <level>
+	public static String constructWorldBroadcast (HumanEntity player, boolean status, ItemStack item, double level) {
+		String text = getLangData("broadcastMessage");
+		text.replace("<player>", player.getCustomName());
+		if (status)
+			text.replace("<status>", getLangData("statusSuccess"));
+		else
+			text.replace("<status>", getLangData("statusFail"));
+		text.replace("<item>", item.getItemMeta().getDisplayName());
+		text.replace("<level>", Double.toString(level));
+		return text;
 	}
 }
