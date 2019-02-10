@@ -1,5 +1,10 @@
 name: ItemEnhancer
 main: com.fourteener.itemenhance.Main
 version: 0.1
+description: Allows for the enhancement of weapons and armor to be better.
+author: 14er
 api-version: 1.8.8
 commands:
+  ieadmin:
+    description: Used by admins to obtain copies of the items the plugin uses.
+    usage: /ieadmin <enhance|magic|lucky>

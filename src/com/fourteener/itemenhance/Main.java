@@ -12,6 +12,7 @@ public class Main extends JavaPlugin {
 		pluginConfig = getConfig();
 		getServer().getPluginManager().registerEvents(new EventListeners(), this);
 		getServer().getPluginManager().registerEvents(new GUIInventory(), this);
+		this.getCommand("ieadmin").setExecutor(new CommandProcessor());
 	}
 	
 	@Override

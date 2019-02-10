@@ -237,8 +237,12 @@ public class EnhanceItem {
 		
 		// Stuff like removing the scrolls and enhance stone that's the same for both cases
 		ItemStack enhanceStone = player.getInventory().getItemInHand();
-		enhanceStone.setAmount(enhanceStone.getAmount() - 1);
-		player.setItemInHand(enhanceStone);
+		if (enhanceStone.getAmount() > 1) {
+			enhanceStone.setAmount(enhanceStone.getAmount() - 1);
+			player.setItemInHand(enhanceStone);
+		} else {
+			player.setItemInHand(new ItemStack(Material.AIR));
+		}
 		// Give the updated item to the player
 		player.getInventory().addItem(item);
 	}

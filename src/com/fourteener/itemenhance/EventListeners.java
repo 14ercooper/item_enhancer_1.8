@@ -135,7 +135,7 @@ public class EventListeners implements Listener {
 		// Gets the item clicked with
 		ItemStack item = event.getItem();
 		// If the item clicked isn't an enhance stone, just pass everything back to Spigot
-		if (!item.equals(ConfigParser.getItemStack("enhance"))) {
+		if (!item.isSimilar(ConfigParser.getItemStack("enhance"))) {
 			return;
 		}
 		// Otherwise, we can begin enhancing the item!
