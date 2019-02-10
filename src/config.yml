@@ -6,7 +6,7 @@ enhance:
     - "§aUse to enhance item"
 
 # Data for the magic scroll (paper)
-maigc:
+magic:
   name: "§b§lMagic Scroll"
   unbreaking: 10
   lore:
@@ -77,7 +77,7 @@ lang:
   guiItem: "Item To Enhance"
   guiConfirm: "Enhance"
   # Do not include any numbers (0123456789) in the texts below this line
-  armorBonus: "Armor Bonus: +"
+  armorBonus: "§rArmor Bonus: +" # Be sure to somehow reset the lore coloration
   armorBonusPost: " Armor"
-  damageBonus: "Damage Bonus: +"
+  damageBonus: "§rDamage Bonus: +" # Be sure to somehow reset the lore coloration
   damageBonusPost: " Damage"

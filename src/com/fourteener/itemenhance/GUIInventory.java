@@ -4,17 +4,20 @@ import java.util.List;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 public class GUIInventory implements Listener {
 	private final Inventory inv; // This instance of the enhancement inventory
+	private boolean didEnhance = false; // Was an enhancement performed (prevents item dupes)
 	
 	// Allows for a new enhancement inventory to be created
 	public GUIInventory () {
@@ -81,15 +84,38 @@ public class GUIInventory implements Listener {
 		// Set cancelled by default so that players can't take items out of the inventory
 		e.setCancelled(true);
 		
-		// If the player is interacting with one of the three item slots, do nothing
-		if (e.getRawSlot() == 3 || e.getRawSlot() == 16 || e.getRawSlot() == 21) {
+		// If the player is interacting with one of the three item slots or their own inventory, do nothing
+		if (e.getRawSlot() == 3 || e.getRawSlot() == 16 || e.getRawSlot() == 21 || e.getRawSlot() >= 27) {
 			e.setCancelled(false); // Un-cancel the event
 			return; // Pass it back to Spigot to handle
 		// Handles the player clicking the confirm button
 		} else if (e.getRawSlot() == 26) {
 			e.setCancelled(true); // Cancels the click event
-			EnhanceItem.enhanceItem(inv.getItem(16), inv.getItem(3), inv.getItem(21), e.getWhoClicked()); // Enhance the item (or attempt to)
+			HumanEntity player = e.getWhoClicked();
+			EnhanceItem.enhanceItem(player.getOpenInventory().getTopInventory().getItem(16), player.getOpenInventory().getTopInventory().getItem(3), player.getOpenInventory().getTopInventory().getItem(21), player); // Enhance the item (or attempt to)
+			didEnhance = true;
 			e.getWhoClicked().closeInventory(); // This inventory isn't needed any more, close it
 		}
+	}
+	
+	// Makes sure the inventory doesn't eat items if the player closes it
+	@EventHandler
+	public void onInventoryClose (InventoryCloseEvent e) {
+		// Makes sure the inventory is one of these
+		if (!e.getInventory().getName().equals(inv.getName()) || didEnhance)
+			return;
+		// Gets items out of the inventory
+		Inventory inven = e.getView().getTopInventory();
+		ItemStack i1 = inven.getItem(16);
+		ItemStack i2 = inven.getItem(3);
+		ItemStack i3 = inven.getItem(21);
+		// Returns the items to the player
+		HumanEntity player = e.getPlayer();
+		if (!(i1 == null))
+			player.getInventory().addItem(i1);
+		if (!(i2 == null))
+			player.getInventory().addItem(i2);
+		if (!(i3 == null))
+			player.getInventory().addItem(i3);
 	}
 }

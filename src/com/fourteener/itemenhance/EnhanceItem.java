@@ -13,9 +13,9 @@ import org.bukkit.entity.Player;
 
 public class EnhanceItem {
 	
-	private static final Material[] weapons = {Material.WOOD_SWORD, Material.STONE_SWORD, Material.IRON_SWORD, Material.DIAMOND_SWORD, Material.GOLD_SWORD,
+	public static Material[] weapons = {Material.WOOD_SWORD, Material.STONE_SWORD, Material.IRON_SWORD, Material.DIAMOND_SWORD, Material.GOLD_SWORD,
 			Material.WOOD_AXE, Material.STONE_AXE, Material.IRON_AXE, Material.DIAMOND_AXE, Material.GOLD_AXE, Material.BOW};
-	private static final Material[] armors = {Material.LEATHER_HELMET, Material.LEATHER_CHESTPLATE, Material.LEATHER_LEGGINGS, Material.LEATHER_BOOTS,
+	public static Material[] armors = {Material.LEATHER_HELMET, Material.LEATHER_CHESTPLATE, Material.LEATHER_LEGGINGS, Material.LEATHER_BOOTS,
 			Material.CHAINMAIL_HELMET, Material.CHAINMAIL_CHESTPLATE, Material.CHAINMAIL_LEGGINGS, Material.CHAINMAIL_BOOTS,
 			Material.GOLD_HELMET, Material.GOLD_CHESTPLATE, Material.GOLD_LEGGINGS, Material.GOLD_BOOTS,
 			Material.IRON_HELMET, Material.IRON_CHESTPLATE, Material.IRON_LEGGINGS, Material.IRON_BOOTS,
@@ -24,6 +24,13 @@ public class EnhanceItem {
 	// All the logic for enhancing an item
 	public static void enhanceItem (ItemStack item, ItemStack magic, ItemStack lucky, HumanEntity player) {
 		// First, we need to figure out if this is a weapon or armor
+		// Prevents some bugs and item dupes
+		if (item == null || !player.getInventory().getItemInHand().isSimilar(ConfigParser.getItemStack("enhance"))) {
+			try {player.getInventory().addItem(item);} catch (Exception e) {} // Give them back the item, though
+			try {player.getInventory().addItem(magic);} catch (Exception e) {} // Give them back the item, though
+			try {player.getInventory().addItem(lucky);} catch (Exception e) {} // Give them back the item, though
+			return;
+		}
 		boolean isArmor = false;
 		if (Arrays.asList(armors).contains(item.getType())) { // Is it armor?
 			isArmor = true;
@@ -31,23 +38,31 @@ public class EnhanceItem {
 			isArmor = false;
 		} else { // If it's something else, it really can't be enhanced. Let the player know and return.
 			((Player) player).sendMessage(ConfigParser.getLangData("badItem"));
-			player.getInventory().addItem(item); // Give them back the item, though
+			try {player.getInventory().addItem(item);} catch (Exception e) {} // Give them back the item, though
+			try {player.getInventory().addItem(magic);} catch (Exception e) {} // Give them back the item, though
+			try {player.getInventory().addItem(lucky);} catch (Exception e) {} // Give them back the item, though
 			return;
 		}
-		
+
 		// Is the enhancement lucky or magical?
 		boolean isLucky = false;
-		if (lucky.equals(ConfigParser.getItemStack("lucky")))
+		if (lucky == null)
+			isLucky = false;
+		else if (lucky.isSimilar(ConfigParser.getItemStack("lucky")))
 			isLucky = true;
 		boolean isMagic = false;
-		if (magic.equals(ConfigParser.getItemStack("maigc")))
+		if (magic == null)
+			isMagic = false;
+		else if (magic.isSimilar(ConfigParser.getItemStack("magic")))
 			isMagic = true;
-		
+
 		// Handles if it is a weapon
 		if (!isArmor) {
 			// First, figure out the level of enhancement the item has, if any
 			ItemMeta itemMeta = item.getItemMeta();
 			List<String> lore = itemMeta.getLore();
+			if (lore == null)
+				lore = new ArrayList<String>();
 			// Parse the lore for any enhancements
 			int enhanceLevel = 0;
 			for (String s : lore) {
@@ -67,7 +82,7 @@ public class EnhanceItem {
 				failChance -= ConfigParser.getLuckIncrease();
 				if (failChance < 0) failChance = 0;
 			}
-				
+
 			// Does the enhancement succeed?
 			double randNum = Math.random();
 			boolean success = true;
@@ -93,6 +108,9 @@ public class EnhanceItem {
 							newLore.add(s);
 						}
 					}
+					lore = newLore;
+					itemMeta.setLore(lore);
+					item.setItemMeta(itemMeta);
 				}
 				// Broadcast if needed
 				if (ConfigParser.getBroadcast(enhanceLevel)) {
@@ -117,6 +135,9 @@ public class EnhanceItem {
 								newLore.add(s);
 							}
 						}
+						lore = newLore;
+						itemMeta.setLore(lore);
+						item.setItemMeta(itemMeta);
 					}
 					else { // Just update the lore
 						List<String> newLore = new ArrayList<String>();
@@ -128,11 +149,15 @@ public class EnhanceItem {
 								newLore.add(s);
 							}
 						}
+						lore = newLore;
+						itemMeta.setLore(lore);
+						item.setItemMeta(itemMeta);
 					}
 				}
+				if (isMagic) enhanceLevel--;
 				// Broadcast if needed
 				if (ConfigParser.getBroadcast(enhanceLevel++)) {
-					Bukkit.getServer().broadcastMessage(ConfigParser.constructWorldBroadcast(player, success, item, enhanceLevel));
+					Bukkit.getServer().broadcastMessage(ConfigParser.constructWorldBroadcast(player, success, item, enhanceLevel + 1));
 				}
 				// Player always gets a broadcast
 				((Player) player).sendMessage(ConfigParser.getLangData("enhanceFailed"));
@@ -144,6 +169,8 @@ public class EnhanceItem {
 			// First, figure out the level of enhancement the item has, if any
 			ItemMeta itemMeta = item.getItemMeta();
 			List<String> lore = itemMeta.getLore();
+			if (lore == null)
+				lore = new ArrayList<String>();
 			// Parse the lore for any enhancements
 			int enhanceLevel = 0;
 			for (String s : lore) {
@@ -189,6 +216,9 @@ public class EnhanceItem {
 							newLore.add(s);
 						}
 					}
+					lore = newLore;
+					itemMeta.setLore(lore);
+					item.setItemMeta(itemMeta);
 				}
 				// Broadcast if needed
 				if (ConfigParser.getBroadcast(enhanceLevel)) {
@@ -213,6 +243,9 @@ public class EnhanceItem {
 								newLore.add(s);
 							}
 						}
+						lore = newLore;
+						itemMeta.setLore(lore);
+						item.setItemMeta(itemMeta);
 					}
 					else { // Just update the lore
 						List<String> newLore = new ArrayList<String>();
@@ -224,11 +257,15 @@ public class EnhanceItem {
 								newLore.add(s);
 							}
 						}
+						lore = newLore;
+						itemMeta.setLore(lore);
+						item.setItemMeta(itemMeta);
 					}
 				}
+				if (isMagic) enhanceLevel--;
 				// Broadcast if needed
 				if (ConfigParser.getBroadcast(enhanceLevel++)) {
-					Bukkit.getServer().broadcastMessage(ConfigParser.constructWorldBroadcast(player, success, item, enhanceLevel));
+					Bukkit.getServer().broadcastMessage(ConfigParser.constructWorldBroadcast(player, success, item, enhanceLevel + 1));
 				}
 				// Player always gets a broadcast
 				((Player) player).sendMessage(ConfigParser.getLangData("enhanceFailed"));
@@ -242,6 +279,20 @@ public class EnhanceItem {
 			player.setItemInHand(enhanceStone);
 		} else {
 			player.setItemInHand(new ItemStack(Material.AIR));
+		}
+		if (!(lucky == null) && lucky.getAmount() > 1 && isLucky) {
+			lucky.setAmount(lucky.getAmount() - 1);
+			player.getInventory().addItem(lucky);
+		}
+		else if (!(lucky == null)) {
+			player.getInventory().addItem(lucky);
+		}
+		if (!(magic == null) && magic.getAmount() > 1 && isMagic) {
+			magic.setAmount(magic.getAmount() - 1);
+			player.getInventory().addItem(magic);
+		}
+		else if (!(magic == null)) {
+			player.getInventory().addItem(magic);
 		}
 		// Give the updated item to the player
 		player.getInventory().addItem(item);

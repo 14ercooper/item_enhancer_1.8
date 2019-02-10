@@ -1,5 +1,6 @@
 package com.fourteener.itemenhance;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.bukkit.entity.Player;
@@ -35,6 +36,8 @@ public class EventListeners implements Listener {
 						// Gets the item's lore
 						ItemMeta meta = i.getItemMeta();
 						List<String> lore = meta.getLore();
+						if (lore == null)
+							lore = new ArrayList<String>();
 						// Parses the lore to determine how much defense to add (if any)
 						for (String s : lore) {
 							// Does the lore contain an armor modifier?
@@ -54,6 +57,8 @@ public class EventListeners implements Listener {
 					// Gets any lore the item may have and parses it for a damage bonus
 					ItemMeta meta = i.getItemMeta();
 					List<String> lore = meta.getLore();
+					if (lore == null)
+						lore = new ArrayList<String>();
 					double atkBonus = 0;
 					for (String s : lore) {
 						if (s.contains(ConfigParser.getLangData("damageBonus"))) {
@@ -80,6 +85,8 @@ public class EventListeners implements Listener {
 					// Gets any lore the item may have and parses it for a damage bonus
 					ItemMeta meta = i.getItemMeta();
 					List<String> lore = meta.getLore();
+					if (lore == null)
+						lore = new ArrayList<String>();
 					double atkBonus = 0;
 					for (String s : lore) {
 						if (s.contains(ConfigParser.getLangData("damageBonus"))) {
@@ -108,6 +115,8 @@ public class EventListeners implements Listener {
 				// Gets the item's lore
 				ItemMeta meta = i.getItemMeta();
 				List<String> lore = meta.getLore();
+				if (lore == null)
+					lore = new ArrayList<String>();
 				// Parses the lore to determine how much defense to add (if any)
 				for (String s : lore) {
 					// Does the lore contain an armor modifier?

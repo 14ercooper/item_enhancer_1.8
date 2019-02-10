@@ -35,6 +35,32 @@ public class ConfigParser {
 		return item;
 	}
 	
+	public static ItemStack getItemStack (String key, int stackSize) { // Gets multiple of the item
+		// Get data from the config file
+		String name = Main.pluginConfig.getString(key + ".name");
+		int unbreaking = Main.pluginConfig.getInt(key + ".unbreaking");
+		List<String> lore = Main.pluginConfig.getStringList(key + ".lore");
+		
+		// Initialize the item stack
+		ItemStack item = null;
+		if (key.equalsIgnoreCase("enhance"))
+			item = new ItemStack(Material.QUARTZ, stackSize);
+		else if (key.equalsIgnoreCase("magic") || key.equalsIgnoreCase("lucky"))
+			item = new ItemStack(Material.PAPER, stackSize);
+		
+		// Add the enchantment
+		item.addUnsafeEnchantment(Enchantment.DURABILITY, unbreaking);
+		
+		// Add the name and lore
+		ItemMeta itemMeta = item.getItemMeta();
+		itemMeta.setDisplayName(name);
+		itemMeta.setLore(lore);
+		item.setItemMeta(itemMeta);
+		
+		// Return the item stack
+		return item;
+	}
+	
 	public static float getRawFailChance (int level) { // Returns the raw fail chance of the enhancement (no modifiers)
 		String failChance = Main.pluginConfig.getString("chance.default");
 		try {
@@ -88,13 +114,13 @@ public class ConfigParser {
 	// <player> <status> <item> to <level>
 	public static String constructWorldBroadcast (HumanEntity player, boolean status, ItemStack item, double level) {
 		String text = getLangData("broadcastMessage");
-		text.replace("<player>", player.getCustomName());
+		text = text.replace("<player>", player.getName());
 		if (status)
-			text.replace("<status>", getLangData("statusSuccess"));
+			text = text.replace("<status>", getLangData("statusSuccess"));
 		else
-			text.replace("<status>", getLangData("statusFail"));
-		text.replace("<item>", item.getItemMeta().getDisplayName());
-		text.replace("<level>", Double.toString(level));
+			text = text.replace("<status>", getLangData("statusFail"));
+		text = text.replace("<item>", item.getType().name());
+		text = text.replace("<level>", Double.toString(level));
 		return text;
 	}
 }

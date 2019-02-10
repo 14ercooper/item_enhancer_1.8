@@ -14,18 +14,34 @@ public class CommandProcessor implements CommandExecutor {
 			Player player = (Player) sender;
 			// Is the player an admin or otherwise granted permission?
 			if (player.isOp() || player.hasPermission("itemenhance.admin")) {
+				if (args.length < 1)
+					return false;
 				// If so, give them the requested item
-				if (args[1].equalsIgnoreCase("enhance")) {
-					player.getInventory().addItem(ConfigParser.getItemStack("enhance"));
-					return true;
-				} else if (args[1].equalsIgnoreCase("magic")) {
-					player.getInventory().addItem(ConfigParser.getItemStack("magic"));
-					return true;
-				} else if (args[1].equalsIgnoreCase("lucky")) {
-					player.getInventory().addItem(ConfigParser.getItemStack("lucky"));
-					return true;
+				if (args.length == 1) {
+					if (args[0].equalsIgnoreCase("enhance")) {
+						player.getInventory().addItem(ConfigParser.getItemStack("enhance"));
+						return true;
+					} else if (args[0].equalsIgnoreCase("magic")) {
+						player.getInventory().addItem(ConfigParser.getItemStack("magic"));
+						return true;
+					} else if (args[0].equalsIgnoreCase("lucky")) {
+						player.getInventory().addItem(ConfigParser.getItemStack("lucky"));
+						return true;
+					}
 				}
-				return false.
+				else if (args.length == 2) {
+					if (args[0].equalsIgnoreCase("enhance")) {
+						player.getInventory().addItem(ConfigParser.getItemStack("enhance", Integer.parseInt(args[1])));
+						return true;
+					} else if (args[0].equalsIgnoreCase("magic")) {
+						player.getInventory().addItem(ConfigParser.getItemStack("magic", Integer.parseInt(args[1])));
+						return true;
+					} else if (args[0].equalsIgnoreCase("lucky")) {
+						player.getInventory().addItem(ConfigParser.getItemStack("lucky", Integer.parseInt(args[1])));
+						return true;
+					}
+				}
+				return false;
 			}
 			return false;
 		}

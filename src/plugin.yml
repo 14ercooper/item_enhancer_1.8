@@ -7,4 +7,4 @@ api-version: 1.8.8
 commands:
   ieadmin:
     description: Used by admins to obtain copies of the items the plugin uses.
-    usage: /ieadmin <enhance|magic|lucky>
+    usage: /ieadmin <enhance|magic|lucky> [number]
