@@ -1,7 +1,10 @@
 package com.fourteener.itemenhance;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang.WordUtils;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.HumanEntity;
@@ -11,9 +14,12 @@ import org.bukkit.inventory.meta.ItemMeta;
 public class ConfigParser {
 	public static ItemStack getItemStack (String key) { // Returns the item specified by the key by parsing the config file
 		// Get data from the config file
-		String name = Main.pluginConfig.getString(key + ".name");
+		String name = ChatColor.translateAlternateColorCodes('&', Main.pluginConfig.getString(key + ".name"));
 		int unbreaking = Main.pluginConfig.getInt(key + ".unbreaking");
-		List<String> lore = Main.pluginConfig.getStringList(key + ".lore");
+		List<String> lore = new ArrayList<String>(), oldLore = Main.pluginConfig.getStringList(key + ".lore");
+		for (String s : oldLore) {
+			lore.add(ChatColor.translateAlternateColorCodes('&', s));
+		}
 		
 		// Initialize the item stack
 		ItemStack item = null;
@@ -37,9 +43,12 @@ public class ConfigParser {
 	
 	public static ItemStack getItemStack (String key, int stackSize) { // Gets multiple of the item
 		// Get data from the config file
-		String name = Main.pluginConfig.getString(key + ".name");
+		String name = ChatColor.translateAlternateColorCodes('&', Main.pluginConfig.getString(key + ".name"));
 		int unbreaking = Main.pluginConfig.getInt(key + ".unbreaking");
-		List<String> lore = Main.pluginConfig.getStringList(key + ".lore");
+		List<String> lore = new ArrayList<String>(), oldLore = Main.pluginConfig.getStringList(key + ".lore");
+		for (String s : oldLore) {
+			lore.add(ChatColor.translateAlternateColorCodes('&', s));
+		}
 		
 		// Initialize the item stack
 		ItemStack item = null;
@@ -87,7 +96,7 @@ public class ConfigParser {
 		return Float.parseFloat(downgrade);
 	}
 	
-	// Gets if a level should be broadcase
+	// Gets if a level should be broadcast
 	public static boolean getBroadcast (int level) {
 		boolean broadcast = Main.pluginConfig.getBoolean("broadcast.default");
 		try {
@@ -107,7 +116,10 @@ public class ConfigParser {
 			// This should never be called unless the config file is messed up
 			e.printStackTrace();
 		}
-		return langData;
+		if (langData == null)
+			return langData;
+		else
+			return ChatColor.translateAlternateColorCodes('&', langData);
 	}
 	
 	// Constructs the status broadcast that is sent to the entire world
@@ -119,8 +131,15 @@ public class ConfigParser {
 			text = text.replace("<status>", getLangData("statusSuccess"));
 		else
 			text = text.replace("<status>", getLangData("statusFail"));
-		text = text.replace("<item>", item.getType().name());
+		if (item.getItemMeta().hasDisplayName())
+			text = text.replace("<item>", item.getItemMeta().getDisplayName());
+		else {
+			String itemName = item.getType().name();
+			itemName = itemName.replace("_", " ");
+			itemName = WordUtils.capitalizeFully(itemName);
+			text = text.replace("<item>", itemName);
+		}
 		text = text.replace("<level>", Double.toString(level));
-		return text;
+		return ChatColor.translateAlternateColorCodes('&', text);
 	}
 }

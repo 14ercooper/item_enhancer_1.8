@@ -3,6 +3,7 @@ package com.fourteener.itemenhance;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -114,7 +115,9 @@ public class EventListeners implements Listener {
 			for (ItemStack i : armor) {
 				// Gets the item's lore
 				ItemMeta meta = i.getItemMeta();
-				List<String> lore = meta.getLore();
+				List<String> lore = null;
+				if (meta != null)
+					lore = meta.getLore();
 				if (lore == null)
 					lore = new ArrayList<String>();
 				// Parses the lore to determine how much defense to add (if any)
@@ -142,7 +145,11 @@ public class EventListeners implements Listener {
 	@EventHandler
 	public void playerInteract (PlayerInteractEvent event) {
 		// Gets the item clicked with
-		ItemStack item = event.getItem();
+		ItemStack item = null;
+		if (event.getItem() != null)
+			item = event.getItem();
+		else
+			item = new ItemStack(Material.AIR);
 		// If the item clicked isn't an enhance stone, just pass everything back to Spigot
 		if (!item.isSimilar(ConfigParser.getItemStack("enhance"))) {
 			return;
