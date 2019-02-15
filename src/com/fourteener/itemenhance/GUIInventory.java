@@ -11,6 +11,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -117,5 +118,29 @@ public class GUIInventory implements Listener {
 			player.getInventory().addItem(i2);
 		if (!(i3 == null))
 			player.getInventory().addItem(i3);
+	}
+	
+	// Fixes items getting deleted when the player leaves the server with the GUI open
+	@EventHandler
+	public void onPlayerQuit(PlayerQuitEvent e) {
+		// Only step if if an enhance GUI is open
+		if(!e.getPlayer().getInventory().getName().equals(inv.getName()))
+			return;
+		// Gets items out of the inventory
+		Inventory inven = e.getPlayer().getOpenInventory().getTopInventory();
+		ItemStack i1 = inven.getItem(16);
+		ItemStack i2 = inven.getItem(3);
+		ItemStack i3 = inven.getItem(21);
+		// Returns the items to the player
+		HumanEntity player = e.getPlayer();
+		if (!(i1 == null))
+			player.getInventory().addItem(i1);
+		if (!(i2 == null))
+			player.getInventory().addItem(i2);
+		if (!(i3 == null))
+			player.getInventory().addItem(i3);
+		// No need
+		didEnhance = true;
+		e.getPlayer().closeInventory();
 	}
 }

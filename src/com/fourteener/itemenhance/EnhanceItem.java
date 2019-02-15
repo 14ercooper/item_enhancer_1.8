@@ -59,10 +59,13 @@ public class EnhanceItem {
 		// Handles if it is a weapon
 		if (!isArmor) {
 			// First, figure out the level of enhancement the item has, if any
+			List<String> lore = new ArrayList<String>();
 			ItemMeta itemMeta = item.getItemMeta();
-			List<String> lore = itemMeta.getLore();
-			if (lore == null)
+			try {
+				lore = itemMeta.getLore();
+			} catch (Exception error) {
 				lore = new ArrayList<String>();
+			}
 			// Parse the lore for any enhancements
 			int enhanceLevel = 0;
 			for (String s : lore) {
@@ -167,10 +170,13 @@ public class EnhanceItem {
 		// Handles if it is armor
 		else {
 			// First, figure out the level of enhancement the item has, if any
+			List<String> lore = new ArrayList<String>();
 			ItemMeta itemMeta = item.getItemMeta();
-			List<String> lore = itemMeta.getLore();
-			if (lore == null)
+			try {
+				lore = itemMeta.getLore();
+			} catch (Exception error) {
 				lore = new ArrayList<String>();
+			}
 			// Parse the lore for any enhancements
 			int enhanceLevel = 0;
 			for (String s : lore) {

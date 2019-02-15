@@ -35,10 +35,13 @@ public class EventListeners implements Listener {
 					double defBonus = 0;
 					for (ItemStack i : armor) {
 						// Gets the item's lore
-						ItemMeta meta = i.getItemMeta();
-						List<String> lore = meta.getLore();
-						if (lore == null)
+						List<String> lore = new ArrayList<String>();;
+						try {
+							ItemMeta meta = i.getItemMeta();
+							lore = meta.getLore();
+						} catch (Exception error) {
 							lore = new ArrayList<String>();
+						}
 						// Parses the lore to determine how much defense to add (if any)
 						for (String s : lore) {
 							// Does the lore contain an armor modifier?
@@ -56,10 +59,13 @@ public class EventListeners implements Listener {
 					inventory = damager.getInventory();
 					ItemStack i = inventory.getItemInHand();
 					// Gets any lore the item may have and parses it for a damage bonus
-					ItemMeta meta = i.getItemMeta();
-					List<String> lore = meta.getLore();
-					if (lore == null)
+					List<String> lore = new ArrayList<String>();;
+					try {
+						ItemMeta meta = i.getItemMeta();
+						lore = meta.getLore();
+					} catch (Exception error) {
 						lore = new ArrayList<String>();
+					}
 					double atkBonus = 0;
 					for (String s : lore) {
 						if (s.contains(ConfigParser.getLangData("damageBonus"))) {
@@ -84,10 +90,13 @@ public class EventListeners implements Listener {
 					PlayerInventory inventory = damager.getInventory();
 					ItemStack i = inventory.getItemInHand();
 					// Gets any lore the item may have and parses it for a damage bonus
-					ItemMeta meta = i.getItemMeta();
-					List<String> lore = meta.getLore();
-					if (lore == null)
+					List<String> lore = new ArrayList<String>();;
+					try {
+						ItemMeta meta = i.getItemMeta();
+						lore = meta.getLore();
+					} catch (Exception error) {
 						lore = new ArrayList<String>();
+					}
 					double atkBonus = 0;
 					for (String s : lore) {
 						if (s.contains(ConfigParser.getLangData("damageBonus"))) {
@@ -114,12 +123,13 @@ public class EventListeners implements Listener {
 			double defBonus = 0;
 			for (ItemStack i : armor) {
 				// Gets the item's lore
-				ItemMeta meta = i.getItemMeta();
-				List<String> lore = null;
-				if (meta != null)
+				List<String> lore = new ArrayList<String>();;
+				try {
+					ItemMeta meta = i.getItemMeta();
 					lore = meta.getLore();
-				if (lore == null)
+				} catch (Exception error) {
 					lore = new ArrayList<String>();
+				}
 				// Parses the lore to determine how much defense to add (if any)
 				for (String s : lore) {
 					// Does the lore contain an armor modifier?
