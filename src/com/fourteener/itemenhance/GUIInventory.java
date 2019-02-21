@@ -96,6 +96,7 @@ public class GUIInventory implements Listener {
 			EnhanceItem.enhanceItem(player.getOpenInventory().getTopInventory().getItem(16), player.getOpenInventory().getTopInventory().getItem(3), player.getOpenInventory().getTopInventory().getItem(21), player); // Enhance the item (or attempt to)
 			didEnhance = true;
 			e.getWhoClicked().closeInventory(); // This inventory isn't needed any more, close it
+			didEnhance = false;
 		}
 	}
 	
@@ -139,8 +140,9 @@ public class GUIInventory implements Listener {
 			player.getInventory().addItem(i2);
 		if (!(i3 == null))
 			player.getInventory().addItem(i3);
-		// No need
+		// No need to give them items again
 		didEnhance = true;
 		e.getPlayer().closeInventory();
+		didEnhance = false;
 	}
 }

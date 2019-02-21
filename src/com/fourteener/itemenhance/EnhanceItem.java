@@ -290,16 +290,17 @@ public class EnhanceItem {
 			lucky.setAmount(lucky.getAmount() - 1);
 			player.getInventory().addItem(lucky);
 		}
+		/*
 		else if (!(lucky == null)) {
 			player.getInventory().addItem(lucky);
-		}
+		} */
 		if (!(magic == null) && magic.getAmount() > 1 && isMagic) {
 			magic.setAmount(magic.getAmount() - 1);
 			player.getInventory().addItem(magic);
 		}
-		else if (!(magic == null)) {
+		/* else if (!(magic == null)) {
 			player.getInventory().addItem(magic);
-		}
+		} */
 		// Give the updated item to the player
 		player.getInventory().addItem(item);
 	}
