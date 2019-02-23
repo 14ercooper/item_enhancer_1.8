@@ -98,6 +98,12 @@ public class EventListeners implements Listener {
 						lore = new ArrayList<String>();
 					}
 					double atkBonus = 0;
+					try {
+						if (lore == null || lore.size() == 0)
+							lore = new ArrayList<String>();
+					} catch (Exception exc) {
+						lore = new ArrayList<String>();
+					}
 					for (String s : lore) {
 						if (s.contains(ConfigParser.getLangData("damageBonus"))) {
 							double d = Double.parseDouble(s.replaceAll("[\\D]", ""));
@@ -128,6 +134,12 @@ public class EventListeners implements Listener {
 					ItemMeta meta = i.getItemMeta();
 					lore = meta.getLore();
 				} catch (Exception error) {
+					lore = new ArrayList<String>();
+				}
+				try {
+					if (lore == null || lore.size() == 0)
+						lore = new ArrayList<String>();
+				} catch (Exception exc) {
 					lore = new ArrayList<String>();
 				}
 				// Parses the lore to determine how much defense to add (if any)

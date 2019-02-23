@@ -77,7 +77,11 @@ public class ConfigParser {
 		} catch (Exception e) {
 			// Yeah, let's just ignore this since this just means it isn't in the config and that's fine
 		}
-		return Float.parseFloat(failChance);
+		try {
+			return Float.parseFloat(failChance);
+		} catch (Exception e) {
+			return 0.5f;
+		}
 	}
 	
 	// Parses the amount a lucky scroll increases the odds of success

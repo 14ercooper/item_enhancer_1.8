@@ -68,6 +68,12 @@ public class EnhanceItem {
 			}
 			// Parse the lore for any enhancements
 			int enhanceLevel = 0;
+			try {
+				if (lore == null || lore.size() == 0)
+					lore = new ArrayList<String>();
+			} catch (Exception exc) {
+				lore = new ArrayList<String>();
+			}
 			for (String s : lore) {
 				if (s.contains(ConfigParser.getLangData("damageBonus"))) {
 					enhanceLevel = Integer.parseInt(s.replaceAll("[\\D]", ""));
