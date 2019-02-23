@@ -139,7 +139,7 @@ public class ConfigParser {
 			itemName = WordUtils.capitalizeFully(itemName);
 			text = text.replace("<item>", itemName);
 		}
-		text = text.replace("<level>", Double.toString(level));
+		text = text.replace("<level>", (Double.toString(level)).replace(".0", ""));
 		return ChatColor.translateAlternateColorCodes('&', text);
 	}
 }
