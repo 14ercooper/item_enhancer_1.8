@@ -69,7 +69,7 @@ lang:
   statusFail: "&cfailed to enhance"
   # Player broadcast
   enhanceSuccess: "&aEnhancement success!"
-  enchantFailed: "&cEnhancement failed :("
+  enhanceFailed: "&cEnhancement failed :("
   # GUI Stuff
   guiTitle: "Enhance Item"
   guiMagic: "Magic Scroll"

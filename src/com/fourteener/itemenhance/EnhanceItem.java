@@ -22,14 +22,14 @@ public class EnhanceItem {
 			Material.DIAMOND_HELMET, Material.DIAMOND_CHESTPLATE, Material.DIAMOND_LEGGINGS, Material.DIAMOND_BOOTS};
 	
 	// All the logic for enhancing an item
-	public static void enhanceItem (ItemStack item, ItemStack magic, ItemStack lucky, HumanEntity player) {
+	public static boolean enhanceItem (ItemStack item, ItemStack magic, ItemStack lucky, HumanEntity player) {
 		// First, we need to figure out if this is a weapon or armor
 		// Prevents some bugs and item dupes
 		if (item == null || !player.getInventory().getItemInHand().isSimilar(ConfigParser.getItemStack("enhance"))) {
 			try {player.getInventory().addItem(item);} catch (Exception e) {} // Give them back the item, though
 			try {player.getInventory().addItem(magic);} catch (Exception e) {} // Give them back the item, though
 			try {player.getInventory().addItem(lucky);} catch (Exception e) {} // Give them back the item, though
-			return;
+			return true;
 		}
 		boolean isArmor = false;
 		if (Arrays.asList(armors).contains(item.getType())) { // Is it armor?
@@ -41,7 +41,7 @@ public class EnhanceItem {
 			try {player.getInventory().addItem(item);} catch (Exception e) {} // Give them back the item, though
 			try {player.getInventory().addItem(magic);} catch (Exception e) {} // Give them back the item, though
 			try {player.getInventory().addItem(lucky);} catch (Exception e) {} // Give them back the item, though
-			return;
+			return true;
 		}
 
 		// Is the enhancement lucky or magical?
@@ -83,9 +83,18 @@ public class EnhanceItem {
 			// Next, calculate the odds of the enhancement succeeding
 			enhanceLevel++;
 			double failChance = ConfigParser.getRawFailChance(enhanceLevel);
-			if (failChance == 2) { // If the enhancement is disabled for this level, let the player know
+			if (failChance == 2f) { // If the enhancement is disabled for this level, let the player know
 				((Player) player).sendMessage(ConfigParser.getLangData("notAllowed"));
-				return;
+				try {
+					player.getInventory().addItem(item);
+				} catch (Exception e) {};
+				try {
+					player.getInventory().addItem(magic);
+				} catch (Exception e) {};
+				try {
+					player.getInventory().addItem(lucky);
+				} catch (Exception e) {};
+				return false;
 			}
 			if (isLucky) { // Is the player lucky?
 				failChance -= ConfigParser.getLuckIncrease();
@@ -194,9 +203,18 @@ public class EnhanceItem {
 			// Next, calculate the odds of the enhancement succeeding
 			enhanceLevel++;
 			double failChance = ConfigParser.getRawFailChance(enhanceLevel);
-			if (failChance == 2) { // If the enhancement is disabled for this level, let the player know
+			if (failChance == 2f) { // If the enhancement is disabled for this level, let the player know
 				((Player) player).sendMessage(ConfigParser.getLangData("notAllowed"));
-				return;
+				try {
+					player.getInventory().addItem(item);
+				} catch (Exception e) {};
+				try {
+					player.getInventory().addItem(magic);
+				} catch (Exception e) {};
+				try {
+					player.getInventory().addItem(lucky);
+				} catch (Exception e) {};
+				return false;
 			}
 			if (isLucky) { // Is the player lucky?
 				failChance -= ConfigParser.getLuckIncrease();
@@ -309,5 +327,6 @@ public class EnhanceItem {
 		} */
 		// Give the updated item to the player
 		player.getInventory().addItem(item);
+		return true;
 	}
 }

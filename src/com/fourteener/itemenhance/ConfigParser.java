@@ -75,19 +75,21 @@ public class ConfigParser {
 		try {
 			failChance = Main.pluginConfig.getString("chance.l" + level);
 		} catch (Exception e) {
-			// Yeah, let's just ignore this since this just means it isn't in the config and that's fine
+			// So it isn't in the config file, load the default
+			System.out.println("Failed");
+			failChance = Main.pluginConfig.getString("chance.default");
 		}
-		try {
-			return Float.parseFloat(failChance);
-		} catch (Exception e) {
-			return 0.5f;
-		}
+		return Float.parseFloat(failChance);
 	}
 	
 	// Parses the amount a lucky scroll increases the odds of success
 	public static float getLuckIncrease () {
-		String luckBonus = Main.pluginConfig.getString("LuckyIncrease");
-		return Float.parseFloat(luckBonus);
+		try {
+			String luckBonus = Main.pluginConfig.getString("LuckyIncrease");
+			return Float.parseFloat(luckBonus);
+		} catch (Exception e) {
+			return 0.1f;
+		}
 	}
 	
 	public static float getDowngradeNumber (int level) { // Returns the raw fail chance of the enhancement (no modifiers)
@@ -95,18 +97,18 @@ public class ConfigParser {
 		try {
 			downgrade = Main.pluginConfig.getString("downgrade.l" + level);
 		} catch (Exception e) {
-			// Yeah, let's just ignore this since this just means it isn't in the config and that's fine
+			downgrade = Main.pluginConfig.getString("downgrade.default");
 		}
 		return Float.parseFloat(downgrade);
 	}
 	
 	// Gets if a level should be broadcast
 	public static boolean getBroadcast (int level) {
-		boolean broadcast = Main.pluginConfig.getBoolean("broadcast.default");
+		boolean broadcast = true;
 		try {
 			broadcast = Main.pluginConfig.getBoolean("broadcast.l" + level);
 		} catch (Exception e) {
-			// Same deal as above, not typing it a third time
+			broadcast = Main.pluginConfig.getBoolean("broadcast.default");
 		}
 		return broadcast;
 	}
