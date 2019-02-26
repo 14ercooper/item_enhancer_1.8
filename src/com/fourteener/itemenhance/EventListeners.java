@@ -35,11 +35,17 @@ public class EventListeners implements Listener {
 					double defBonus = 0;
 					for (ItemStack i : armor) {
 						// Gets the item's lore
-						List<String> lore = new ArrayList<String>();;
+						List<String> lore = new ArrayList<String>();
 						try {
 							ItemMeta meta = i.getItemMeta();
 							lore = meta.getLore();
 						} catch (Exception error) {
+							lore = new ArrayList<String>();
+						}
+						try {
+							if (lore == null || lore.size() == 0)
+								lore = new ArrayList<String>();
+						} catch (Exception exc) {
 							lore = new ArrayList<String>();
 						}
 						// Parses the lore to determine how much defense to add (if any)
@@ -59,7 +65,7 @@ public class EventListeners implements Listener {
 					inventory = damager.getInventory();
 					ItemStack i = inventory.getItemInHand();
 					// Gets any lore the item may have and parses it for a damage bonus
-					List<String> lore = new ArrayList<String>();;
+					List<String> lore = new ArrayList<String>();
 					try {
 						ItemMeta meta = i.getItemMeta();
 						lore = meta.getLore();
@@ -67,6 +73,12 @@ public class EventListeners implements Listener {
 						lore = new ArrayList<String>();
 					}
 					double atkBonus = 0;
+					try {
+						if (lore == null || lore.size() == 0)
+							lore = new ArrayList<String>();
+					} catch (Exception exc) {
+						lore = new ArrayList<String>();
+					}
 					for (String s : lore) {
 						if (s.contains(ConfigParser.getLangData("damageBonus"))) {
 							double d = Double.parseDouble(s.replaceAll("[\\D]", ""));

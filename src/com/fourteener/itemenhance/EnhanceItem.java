@@ -194,10 +194,14 @@ public class EnhanceItem {
 			}
 			// Parse the lore for any enhancements
 			int enhanceLevel = 0;
-			for (String s : lore) {
-				if (s.contains(ConfigParser.getLangData("armorBonus"))) {
-					enhanceLevel = Integer.parseInt(s.replaceAll("[\\D]", ""));
+			try {
+				for (String s : lore) {
+					if (s.contains(ConfigParser.getLangData("armorBonus"))) {
+						enhanceLevel = Integer.parseInt(s.replaceAll("[\\D]", ""));
+					}
 				}
+			} catch (NullPointerException e) {
+				// Just ignore it, lore is empty
 			}
 			
 			// Next, calculate the odds of the enhancement succeeding

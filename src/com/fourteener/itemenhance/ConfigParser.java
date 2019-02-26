@@ -104,13 +104,15 @@ public class ConfigParser {
 	
 	// Gets if a level should be broadcast
 	public static boolean getBroadcast (int level) {
+		return false;
+		/*
 		boolean broadcast = true;
 		try {
 			broadcast = Main.pluginConfig.getBoolean("broadcast.l" + level);
 		} catch (Exception e) {
 			broadcast = Main.pluginConfig.getBoolean("broadcast.default");
 		}
-		return broadcast;
+		return broadcast; */
 	}
 	
 	// Parses the lang data for the translated string
