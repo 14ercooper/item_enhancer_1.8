@@ -1,6 +1,6 @@
 name: ItemEnhancer
 main: com.fourteener.itemenhance.Main
-version: 0.1
+version: 1.0
 description: Allows for the enhancement of weapons and armor to be better.
 author: 14er
 api-version: 1.8.8
